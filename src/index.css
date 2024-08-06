@@ -1,0 +1,5 @@
+@import url(../src/vendor/normalize.css);
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url(../src/vendor/fonts/CabinetGrotesk-Bold.woff2);
+}
