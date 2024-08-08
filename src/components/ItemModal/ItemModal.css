@@ -23,6 +23,10 @@
 
 .modal__image {
   width: 100%;
+  max-width: 498px;
+  max-height: 498px;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
 }
 
 .modal__close_type_image {
