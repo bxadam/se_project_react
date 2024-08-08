@@ -7,3 +7,8 @@ This data is derived from a free Weather API.
 Currently, this app is built using Javascript, JSX, CSS and HTML.
 
 It uses React for the frontend and Node.js for the backend (which will be included at a later date).
+
+#sources
+
+fonts: https://fontshare.com
+weather data: https://openweathermap.org/
