@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import "./ToggleSwitch.css";
+import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
 
 export default function ToggleSwitch() {
-  const [currentTempUnit, setCurrentTempUnit] = useState("F");
+  // const [currentTempUnit, setCurrentTempUnit] = useState("F");
 
-  function handleChange() {
-    if (currentTempUnit === "C") setCurrentTempUnit("F");
-    if (currentTempUnit === "F") setCurrentTempUnit("C");
-    console.log(currentTempUnit);
-  }
+  // function handleChange() {
+  //   if (currentTempUnit === "C") setCurrentTempUnit("F");
+  //   if (currentTempUnit === "F") setCurrentTempUnit("C");
+  // }
+  const { currentTempUnit, handleToggleSwitchChange } = useContext(
+    CurrentTempUnitContext
+  );
+
+  console.log(currentTempUnit);
 
   return (
     <label className="switch__container">
@@ -17,7 +22,7 @@ export default function ToggleSwitch() {
         name="switch"
         type="checkbox"
         className="switch__btn"
-        onChange={handleChange}
+        onChange={handleToggleSwitchChange}
       />
       <span
         className={
