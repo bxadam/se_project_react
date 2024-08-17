@@ -38,8 +38,6 @@ function App() {
     if (currentTempUnit === "F") setCurrentTempUnit("C");
   };
 
-  console.log(currentTempUnit);
-
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
@@ -52,7 +50,7 @@ function App() {
   return (
     <div className="app">
       <CurrentTempUnitContext.Provider
-        value={(currentTempUnit, handleToggleSwitchChange)}
+        value={{ currentTempUnit, handleToggleSwitchChange }}
       >
         <div className="app__content">
           <Header handleAddClick={handleAddClick} weatherData={weatherData} />

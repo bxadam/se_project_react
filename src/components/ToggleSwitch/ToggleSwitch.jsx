@@ -14,8 +14,6 @@ export default function ToggleSwitch() {
     CurrentTempUnitContext
   );
 
-  console.log(currentTempUnit);
-
   return (
     <label className="switch__container">
       <input
