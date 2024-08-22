@@ -1,7 +1,7 @@
 import React from "react";
 
 const CurrentTempUnitContext = React.createContext({
-  currentTempUnit: "F",
+  currentTempUnit: "C",
   handleToggleSwitchChange: () => {},
 });
 

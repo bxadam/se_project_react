@@ -4,12 +4,6 @@ import "./ToggleSwitch.css";
 import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
 
 export default function ToggleSwitch() {
-  // const [currentTempUnit, setCurrentTempUnit] = useState("F");
-
-  // function handleChange() {
-  //   if (currentTempUnit === "C") setCurrentTempUnit("F");
-  //   if (currentTempUnit === "F") setCurrentTempUnit("C");
-  // }
   const { currentTempUnit, handleToggleSwitchChange } = useContext(
     CurrentTempUnitContext
   );

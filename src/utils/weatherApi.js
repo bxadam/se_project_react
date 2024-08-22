@@ -1,4 +1,4 @@
-export function checkResponse(res) {
+function checkResponse(res) {
   if (res.ok) {
     return res.json();
   } else {
@@ -25,9 +25,9 @@ export const filterWeatherData = (data) => {
 };
 
 const getWeatherType = (temperature) => {
-  if (temperature > 85) {
+  if (temperature.F > 75 || temperature.C > 24) {
     return "hot";
-  } else if (temperature > 65) {
+  } else if (temperature > 60 || temperature.C > 16) {
     return "warm";
   } else {
     return "cold";
