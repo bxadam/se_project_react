@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "../ModalWithForm/ModalWithForm.css";
 
 export default function AddItemModal({ onClose, onAddItem, isOpen }) {
+  const [name, setName] = useState("");
+
+  function handleNameChange() {
+    console.log(name);
+    setName(name);
+  }
+
+  const [link, setLink] = useState("");
+
+  function handleLinkChange() {
+    console.log(link);
+    setLink(link);
+  }
+
+  const [weatherType, setWeatherType] = useState("");
+
+  function handleWeatherTypeChange() {
+    console.log(weatherType);
+    setWeatherType(weatherType);
+  }
+
   return (
     <ModalWithForm
       buttonText="Add garment"
@@ -18,7 +39,8 @@ export default function AddItemModal({ onClose, onAddItem, isOpen }) {
           type="text"
           className="modal__input"
           id="name"
-          placeholder="Name"
+          placeholder="name"
+          onChange={handleNameChange}
         />
       </label>
       <label htmlFor="imageUrl" className="modal__label">
@@ -28,9 +50,13 @@ export default function AddItemModal({ onClose, onAddItem, isOpen }) {
           className="modal__input"
           id="imageUrl"
           placeholder="Image URL"
+          onChange={handleLinkChange}
         />
       </label>
-      <fieldset className="modal__radio-buttons">
+      <fieldset
+        className="modal__radio-buttons"
+        onChange={handleWeatherTypeChange}
+      >
         <legend className="modal__legend">Select the weather type:</legend>
         <label htmlFor="hot" className="modal__label_type_radio">
           <input
