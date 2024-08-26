@@ -5,23 +5,28 @@ import "../ModalWithForm/ModalWithForm.css";
 export default function AddItemModal({ onClose, onAddItem, isOpen }) {
   const [name, setName] = useState("");
 
-  function handleNameChange() {
+  function handleNameChange(e) {
     console.log(name);
-    setName(name);
+    setName(e.target.value);
   }
 
   const [link, setLink] = useState("");
 
-  function handleLinkChange() {
+  function handleLinkChange(e) {
     console.log(link);
-    setLink(link);
+    setLink(e.target.value);
   }
 
   const [weatherType, setWeatherType] = useState("");
 
-  function handleWeatherTypeChange() {
-    console.log(weatherType);
-    setWeatherType(weatherType);
+  function handleWeatherTypeChange(e) {
+    console.log(e.target.value);
+    setWeatherType(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onAddItem({ name, link, weatherType });
   }
 
   return (
@@ -30,7 +35,7 @@ export default function AddItemModal({ onClose, onAddItem, isOpen }) {
       title="New garment"
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={onAddItem}
+      onSubmit={handleSubmit}
     >
       <label htmlFor="name" className="modal__label">
         Name{" "}
@@ -39,7 +44,7 @@ export default function AddItemModal({ onClose, onAddItem, isOpen }) {
           type="text"
           className="modal__input"
           id="name"
-          placeholder="name"
+          placeholder="Name"
           onChange={handleNameChange}
         />
       </label>
@@ -53,10 +58,7 @@ export default function AddItemModal({ onClose, onAddItem, isOpen }) {
           onChange={handleLinkChange}
         />
       </label>
-      <fieldset
-        className="modal__radio-buttons"
-        onChange={handleWeatherTypeChange}
-      >
+      <fieldset className="modal__radio-buttons">
         <legend className="modal__legend">Select the weather type:</legend>
         <label htmlFor="hot" className="modal__label_type_radio">
           <input
@@ -64,6 +66,8 @@ export default function AddItemModal({ onClose, onAddItem, isOpen }) {
             name="weather"
             className="modal__radio-input"
             id="hot"
+            onChange={handleWeatherTypeChange}
+            value="hot"
           />
           Hot
         </label>
@@ -73,6 +77,8 @@ export default function AddItemModal({ onClose, onAddItem, isOpen }) {
             name="weather"
             className="modal__radio-input"
             id="warm"
+            onChange={handleWeatherTypeChange}
+            value="warm"
           />
           Warm
         </label>
@@ -82,6 +88,8 @@ export default function AddItemModal({ onClose, onAddItem, isOpen }) {
             name="weather"
             className="modal__radio-input"
             id="cold"
+            onChange={handleWeatherTypeChange}
+            value="cold"
           />
           Cold
         </label>

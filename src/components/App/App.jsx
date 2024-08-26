@@ -5,10 +5,9 @@ import "./App.css";
 import Main from "../Main/Main";
 import Header from "../Header/Header";
 import Profile from "../Profile/Profile";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
 import Footer from "../Footer/Footer";
-import { coordinates, APIkey } from "../../utils/constants";
+import { coordinates, APIkey, clothingStorage } from "../../utils/constants";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
@@ -22,6 +21,7 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTempUnit, setCurrentTempUnit] = useState("C");
+  const [clothingItems, setClothingItems] = useState(clothingStorage);
 
   const handleAddClick = () => {
     setActiveModal("add-garment");
@@ -36,9 +36,19 @@ function App() {
     setSelectedCard(card);
   };
 
-  const onAddItem = (e) => {
-    e.preventDefault();
-    console.log("modal successfully submitted! Now go do API stuff...");
+  const handleCardDelete = () => {
+    setClothingItems(
+      clothingItems.filter((item) => item._id !== selectedCard._id)
+    );
+    closeActiveModal();
+  };
+
+  const onAddItem = ({ name, link, weatherType }) => {
+    const newClothingItem = { name: name, link: link, weather: weatherType };
+    setClothingItems((prevClothingItems) => [
+      ...prevClothingItems,
+      newClothingItem,
+    ]);
     closeActiveModal();
   };
 
@@ -71,12 +81,19 @@ function App() {
                 <Main
                   weatherData={weatherData}
                   handleCardClick={handleCardClick}
+                  clothingItems={clothingItems}
                 />
               }
             ></Route>
             <Route
               path="profile/"
-              element={<Profile handleCardClick={handleCardClick} />}
+              element={
+                <Profile
+                  handleCardClick={handleCardClick}
+                  handleAddClick={handleAddClick}
+                  clothingItems={clothingItems}
+                />
+              }
             ></Route>
           </Routes>
 
@@ -95,6 +112,7 @@ function App() {
           activeModal={activeModal}
           card={selectedCard}
           onClose={closeActiveModal}
+          handleCardDelete={handleCardDelete}
         />
       </CurrentTempUnitContext.Provider>
     </div>
