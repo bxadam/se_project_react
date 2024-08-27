@@ -6,27 +6,24 @@ export default function AddItemModal({ onClose, onAddItem, isOpen }) {
   const [name, setName] = useState("");
 
   function handleNameChange(e) {
-    console.log(name);
     setName(e.target.value);
   }
 
   const [link, setLink] = useState("");
 
   function handleLinkChange(e) {
-    console.log(link);
     setLink(e.target.value);
   }
 
   const [weatherType, setWeatherType] = useState("");
 
   function handleWeatherTypeChange(e) {
-    console.log(e.target.value);
     setWeatherType(e.target.value);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    onAddItem({ name, link, weatherType });
+    onAddItem({ name: name, imageUrl: link, weather: weatherType });
   }
 
   return (

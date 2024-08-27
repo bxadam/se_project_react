@@ -7,10 +7,11 @@ import Header from "../Header/Header";
 import Profile from "../Profile/Profile";
 import ItemModal from "../ItemModal/ItemModal";
 import Footer from "../Footer/Footer";
-import { coordinates, APIkey, clothingStorage } from "../../utils/constants";
+import { coordinates, APIkey } from "../../utils/constants";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
+import { getItems, createItems, deleteItems } from "../../utils/api";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -21,7 +22,7 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTempUnit, setCurrentTempUnit] = useState("C");
-  const [clothingItems, setClothingItems] = useState(clothingStorage);
+  const [clothingItems, setClothingItems] = useState([]);
 
   const handleAddClick = () => {
     setActiveModal("add-garment");
@@ -37,25 +38,41 @@ function App() {
   };
 
   const handleCardDelete = () => {
+    deleteItems(selectedCard._id); //double check functionality
     setClothingItems(
       clothingItems.filter((item) => item._id !== selectedCard._id)
     );
     closeActiveModal();
   };
 
-  const onAddItem = ({ name, link, weatherType }) => {
-    const newClothingItem = { name: name, link: link, weather: weatherType };
-    setClothingItems((prevClothingItems) => [
-      ...prevClothingItems,
-      newClothingItem,
-    ]);
-    closeActiveModal();
+  const onAddItem = ({ name, imageUrl, weather }) => {
+    const newClothingItem = {
+      name: name,
+      imageUrl: imageUrl,
+      weather: weather,
+    };
+    createItems(newClothingItem)
+      .then((card) => {
+        setClothingItems([...clothingItems, card]);
+        closeActiveModal();
+      })
+      .catch((err) => console.error(err));
   };
 
   const handleToggleSwitchChange = () => {
     if (currentTempUnit === "C") setCurrentTempUnit("F");
     if (currentTempUnit === "F") setCurrentTempUnit("C");
   };
+
+  useEffect(() => {
+    getItems()
+      .then((data) => {
+        setClothingItems(data);
+      })
+      .catch(() => {
+        console.log("Error fetching items");
+      });
+  }, []);
 
   useEffect(() => {
     getWeather(coordinates, APIkey)
