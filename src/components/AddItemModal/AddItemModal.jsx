@@ -38,6 +38,8 @@ export default function AddItemModal({ onClose, onAddItem, isOpen }) {
       <label htmlFor="name" className="modal__label">
         Name{" "}
         <input
+          required
+          value={name}
           autoComplete="off"
           type="text"
           className="modal__input"
@@ -49,6 +51,8 @@ export default function AddItemModal({ onClose, onAddItem, isOpen }) {
       <label htmlFor="imageUrl" className="modal__label">
         Image{" "}
         <input
+          required
+          value={link}
           type="url"
           className="modal__input"
           id="imageUrl"
@@ -66,6 +70,7 @@ export default function AddItemModal({ onClose, onAddItem, isOpen }) {
             id="hot"
             onChange={handleWeatherTypeChange}
             value="hot"
+            required
           />
           Hot
         </label>
@@ -77,6 +82,7 @@ export default function AddItemModal({ onClose, onAddItem, isOpen }) {
             id="warm"
             onChange={handleWeatherTypeChange}
             value="warm"
+            required
           />
           Warm
         </label>
@@ -88,6 +94,7 @@ export default function AddItemModal({ onClose, onAddItem, isOpen }) {
             id="cold"
             onChange={handleWeatherTypeChange}
             value="cold"
+            required
           />
           Cold
         </label>

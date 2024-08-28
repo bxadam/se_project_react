@@ -38,11 +38,14 @@ function App() {
   };
 
   const handleCardDelete = () => {
-    deleteItems(selectedCard._id); //double check functionality
-    setClothingItems(
-      clothingItems.filter((item) => item._id !== selectedCard._id)
-    );
-    closeActiveModal();
+    deleteItems(selectedCard._id)
+      .then(() => {
+        setClothingItems(
+          clothingItems.filter((item) => item._id !== selectedCard._id)
+        );
+        closeActiveModal();
+      })
+      .catch((error) => console.error(error)); //double check functionality
   };
 
   const onAddItem = ({ name, imageUrl, weather }) => {
@@ -53,7 +56,7 @@ function App() {
     };
     createItems(newClothingItem)
       .then((card) => {
-        setClothingItems([...clothingItems, card]);
+        setClothingItems([card, ...clothingItems]);
         closeActiveModal();
       })
       .catch((err) => console.error(err));
@@ -67,7 +70,7 @@ function App() {
   useEffect(() => {
     getItems()
       .then((data) => {
-        setClothingItems(data);
+        setClothingItems(data.reverse());
       })
       .catch(() => {
         console.log("Error fetching items");

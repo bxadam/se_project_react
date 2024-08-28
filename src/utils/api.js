@@ -1,17 +1,8 @@
 const baseUrl = "http://localhost:3001";
-
-function checkRes() {
-  return (res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      throw new Error(res.status);
-    }
-  };
-}
+import { checkResponse } from "./weatherApi";
 
 function getItems() {
-  return fetch(`${baseUrl}/items`).then(checkRes());
+  return fetch(`${baseUrl}/items`).then((res) => checkResponse(res));
 }
 
 function createItems(item) {
@@ -21,7 +12,7 @@ function createItems(item) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(item),
-  }).then(checkRes());
+  }).then((res) => checkResponse(res));
 }
 
 function deleteItems(id) {
@@ -30,7 +21,7 @@ function deleteItems(id) {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then(checkRes());
+  }).then((res) => checkResponse(res));
 }
 
 export { getItems, createItems, deleteItems };
