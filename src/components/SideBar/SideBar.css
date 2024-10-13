@@ -2,6 +2,15 @@
   display: flex;
   gap: 16px;
   width: 230px;
+  flex-wrap: wrap;
+  max-height: 138px;
+}
+
+.sidebar__user {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .sidebar__avatar {
@@ -15,4 +24,23 @@
   font-weight: 700;
   line-height: 24px;
   margin: 16px 0 0;
+}
+
+.sidebar__info,
+.sidebar__logout {
+  display: flex;
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  margin-left: none;
+  margin-right: 20px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.sidebar__info {
+  margin-top: 8px;
 }

@@ -6,12 +6,17 @@ import Main from "../Main/Main";
 import Header from "../Header/Header";
 import Profile from "../Profile/Profile";
 import ItemModal from "../ItemModal/ItemModal";
+import RegisterModal from "../RegisterModal/RegisterModal";
 import Footer from "../Footer/Footer";
 import { coordinates, APIkey } from "../../utils/constants";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import { getItems, createItems, deleteItems } from "../../utils/api";
+import LoginModal from "../LoginModal/LoginModal";
+
+import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
+import ProtectedRoute from "../ProtectedRoutes/ProtectedRoute";
+import { signUp } from "../../utils/auth";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -23,6 +28,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTempUnit, setCurrentTempUnit] = useState("C");
   const [clothingItems, setClothingItems] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const handleAddClick = () => {
     setActiveModal("add-garment");
@@ -30,6 +36,7 @@ function App() {
 
   const closeActiveModal = () => {
     setActiveModal("");
+    console.log("closed");
   };
 
   const handleCardClick = (card) => {
@@ -60,6 +67,15 @@ function App() {
         closeActiveModal();
       })
       .catch((err) => console.error(err));
+  };
+
+  const onRegister = ({ name, email, password, avatar }) => {
+    const userProfile = { name, email, password, avatar };
+    signUp(userProfile).then((res) => {
+      console.log(res);
+      closeActiveModal();
+      setIsLoggedIn(true);
+    });
   };
 
   const handleToggleSwitchChange = () => {
@@ -108,11 +124,13 @@ function App() {
             <Route
               path="profile/"
               element={
-                <Profile
-                  handleCardClick={handleCardClick}
-                  handleAddClick={handleAddClick}
-                  clothingItems={clothingItems}
-                />
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <Profile
+                    handleCardClick={handleCardClick}
+                    handleAddClick={handleAddClick}
+                    clothingItems={clothingItems}
+                  />
+                </ProtectedRoute>
               }
             ></Route>
           </Routes>
@@ -135,6 +153,20 @@ function App() {
           handleCardDelete={handleCardDelete}
         />
       </CurrentTempUnitContext.Provider>
+
+      <RegisterModal
+        activeModal={activeModal}
+        isOpen={activeModal === "register"}
+        onClose={closeActiveModal}
+        onRegister={onRegister}
+      />
+
+      <LoginModal
+        activeModal={activeModal}
+        isOpen={activeModal === "login"}
+        onClose={closeActiveModal}
+        // onLogin={onLogin}
+      />
     </div>
   );
 }
