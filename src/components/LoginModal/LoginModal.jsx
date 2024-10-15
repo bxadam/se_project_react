@@ -19,7 +19,14 @@ export default function LoginModal({ onClose, isOpen, onLogin }) {
   function handleLogin(e) {
     e.preventDefault();
     console.log("login yay");
-    onLogin({ email, password });
+    onLogin({ email, password })
+      .then(() => {
+        setEmail("");
+        setPassword("");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   return (

@@ -28,7 +28,7 @@ function signIn({ email, password }) {
     .catch((error) => console.error(error));
 }
 
-function checkToken() {
+function getUserProfile() {
   return fetch(`${baseUrl}/users/me`, {
     method: "GET",
     headers: {
@@ -38,4 +38,4 @@ function checkToken() {
   }).then(checkResponse);
 }
 
-export { signIn, signUp, checkToken };
+export { signIn, signUp, getUserProfile };

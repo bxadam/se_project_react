@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 import "./Header.css";
 import logo from "../../assets/logo.svg";
-import avatar from "../../assets/avatar.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -20,8 +19,6 @@ function Header({
     month: "long",
     day: "numeric",
   });
-
-  console.log(currentUser);
 
   if (isLoggedIn === true) {
     return (

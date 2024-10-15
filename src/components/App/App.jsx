@@ -8,7 +8,7 @@ import Profile from "../Profile/Profile";
 import ItemModal from "../ItemModal/ItemModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import Footer from "../Footer/Footer";
-import { coordinates, APIkey } from "../../utils/constants";
+import { coordinates, APIkey, TOKEN } from "../../utils/constants";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import { getItems, createItems, deleteItems } from "../../utils/api";
@@ -18,7 +18,7 @@ import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 import ProtectedRoute from "../ProtectedRoutes/ProtectedRoute";
-import { signUp, signIn, checkToken } from "../../utils/auth";
+import { signUp, signIn, getUserProfile } from "../../utils/auth";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -85,6 +85,7 @@ function App() {
     const userProfile = { name, email, password, avatar };
     signUp(userProfile).then((res) => {
       console.log(res);
+      setCurrentUser(userProfile);
       signIn({ email, password });
       setIsLoggedIn(true);
       closeActiveModal();
@@ -93,20 +94,26 @@ function App() {
   };
 
   const onLogin = ({ email, password }) => {
+    debugger;
     if (!{ email, password }) {
       return;
     }
-    signIn({ email, password }).then((res) => {
+    return signIn({ email, password }).then((res) => {
       console.log(res);
       localStorage.setItem("jwt", res.token);
       setIsLoggedIn(true);
-      checkToken()
-        .then((user) => {
-          setCurrentUser(user.data);
-          closeActiveModal();
-        })
-        .catch((err) => console.error(err));
+      setCurrentUser(res.user);
+      closeActiveModal();
       navigate("/profile");
+    });
+  };
+
+  const onSignOut = () => {
+    getUserProfile().then(() => {
+      localStorage.removeItem("jwt");
+      setIsLoggedIn(false);
+      closeActiveModal();
+      navigate("/");
     });
   };
 
@@ -132,12 +139,6 @@ function App() {
         setWeatherData(filteredData);
       })
       .catch(console.error);
-  }, []);
-
-  useEffect(() => {
-    checkToken().then((res) => {
-      setCurrentUser(res.data);
-    });
   }, []);
 
   return (
@@ -174,6 +175,7 @@ function App() {
                       handleCardClick={handleCardClick}
                       handleAddClick={handleAddClick}
                       clothingItems={clothingItems}
+                      onSignOut={onSignOut}
                     />
                   </ProtectedRoute>
                 }

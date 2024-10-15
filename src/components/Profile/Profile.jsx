@@ -6,11 +6,12 @@ export default function Profile({
   handleCardClick,
   handleAddClick,
   clothingItems,
+  onSignOut,
 }) {
   return (
     <div className="profile">
       <section className="profile__sidebar">
-        <SideBar />
+        <SideBar onSignOut={onSignOut} />
       </section>
       <section className="profile__clothes-section">
         <ClothesSection
