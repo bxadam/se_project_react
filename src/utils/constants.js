@@ -172,3 +172,5 @@ export const coordinates = {
 };
 
 export const APIkey = "4504be8201f14052dad1d006e7451d7b";
+
+export const TOKEN = localStorage.getItem("jwt");

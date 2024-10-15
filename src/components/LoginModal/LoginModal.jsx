@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "../ModalWithForm/ModalWithForm.css";
 import "./LoginModal.css";
+import { Link } from "react-router-dom";
 
-export default function LoginModal({ onClose, isOpen }) {
+export default function LoginModal({ onClose, isOpen, onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [avatar, setAvatar] = useState("");
 
   function handleEmailChange(e) {
     setEmail(e.target.value);
@@ -17,25 +16,19 @@ export default function LoginModal({ onClose, isOpen }) {
     setPassword(e.target.value);
   }
 
-  function handleNameChange(e) {
-    setName(e.target.value);
+  function handleLogin(e) {
+    e.preventDefault();
+    console.log("login yay");
+    onLogin({ email, password });
   }
-
-  function handleAvatarChange(e) {
-    setAvatar(e.target.value);
-  }
-
-  //make a submit handler
-  //make a handle email change function
-  //pass props through context
 
   return (
     <ModalWithForm
-      buttonText="Login"
+      buttonText="Log In"
       title="Log In"
       isOpen={isOpen}
       onClose={onClose}
-      // onSubmit={handleSubmit}
+      onSubmit={handleLogin}
     >
       <label htmlFor="email" className="modal__label">
         Email{" "}
@@ -63,7 +56,7 @@ export default function LoginModal({ onClose, isOpen }) {
           onChange={handlePasswordChange}
         />
       </label>
-      <button className="modal__login-btn">Or Log In</button>
+      <button className="modal__login-btn">Or Sign Up</button>
     </ModalWithForm>
   );
 }
