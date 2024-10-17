@@ -38,4 +38,15 @@ function getUserProfile() {
   }).then(checkResponse);
 }
 
-export { signIn, signUp, getUserProfile };
+function editProfile({ name, avatar }) {
+  return fetch(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${TOKEN}`,
+    },
+    body: JSON.stringify({ name, avatar }),
+  }).then(checkResponse);
+}
+
+export { signIn, signUp, getUserProfile, editProfile };

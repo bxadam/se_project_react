@@ -4,9 +4,8 @@ import "./SideBar.css";
 import avatar from "../../assets/avatar.png";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function SideBar({ onSignOut }) {
+function SideBar({ onSignOut, handleEditProfileClick }) {
   const currentUser = useContext(CurrentUserContext);
-  //console.log(currentUser);
   return (
     <div className="sidebar">
       <img
@@ -18,7 +17,9 @@ function SideBar({ onSignOut }) {
         {!currentUser ? avatar : currentUser.name}
       </p>
       <div className="sidebar__user">
-        <button className="sidebar__info">Change Profile Data</button>
+        <button onClick={handleEditProfileClick} className="sidebar__info">
+          Change Profile Data
+        </button>
         <button onClick={onSignOut} className="sidebar__logout">
           Log Out
         </button>

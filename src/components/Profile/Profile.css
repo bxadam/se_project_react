@@ -2,7 +2,6 @@
   display: flex;
   gap: 116px;
   margin: 0 auto 80px;
-  justify-content: space-between;
 }
 
 .profile__sidebar {

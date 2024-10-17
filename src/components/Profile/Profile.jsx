@@ -7,11 +7,16 @@ export default function Profile({
   handleAddClick,
   clothingItems,
   onSignOut,
+  handleEditProfileClick,
 }) {
   return (
     <div className="profile">
       <section className="profile__sidebar">
-        <SideBar onSignOut={onSignOut} />
+        <SideBar
+          onSignOut={onSignOut}
+          onEditProfileData={handleEditProfileClick}
+          handleEditProfileClick={handleEditProfileClick}
+        />
       </section>
       <section className="profile__clothes-section">
         <ClothesSection

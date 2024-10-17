@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "../ModalWithForm/ModalWithForm.css";
 import "./LoginModal.css";
-import { Link } from "react-router-dom";
 
 export default function LoginModal({ onClose, isOpen, onLogin }) {
   const [email, setEmail] = useState("");

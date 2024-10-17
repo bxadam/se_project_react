@@ -5,20 +5,21 @@ import "./App.css";
 import Main from "../Main/Main";
 import Header from "../Header/Header";
 import Profile from "../Profile/Profile";
+import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
-import Footer from "../Footer/Footer";
-import { coordinates, APIkey, TOKEN } from "../../utils/constants";
-import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import AddItemModal from "../AddItemModal/AddItemModal";
-import { getItems, createItems, deleteItems } from "../../utils/api";
 import LoginModal from "../LoginModal/LoginModal";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
+import Footer from "../Footer/Footer";
+import { coordinates, APIkey } from "../../utils/constants";
+import { getWeather, filterWeatherData } from "../../utils/weatherApi";
+import { getItems, createItems, deleteItems } from "../../utils/api";
 
 import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 import ProtectedRoute from "../ProtectedRoutes/ProtectedRoute";
-import { signUp, signIn, getUserProfile } from "../../utils/auth";
+import { signUp, signIn, getUserProfile, editProfile } from "../../utils/auth";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -44,6 +45,10 @@ function App() {
 
   const handleLoginClick = () => {
     setActiveModal("login");
+  };
+
+  const handleEditProfileClick = () => {
+    setActiveModal("edit");
   };
 
   const closeActiveModal = () => {
@@ -94,7 +99,6 @@ function App() {
   };
 
   const onLogin = ({ email, password }) => {
-    debugger;
     if (!{ email, password }) {
       return;
     }
@@ -109,11 +113,17 @@ function App() {
   };
 
   const onSignOut = () => {
-    getUserProfile().then(() => {
-      localStorage.removeItem("jwt");
-      setIsLoggedIn(false);
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    closeActiveModal();
+    navigate("/");
+  };
+
+  const onProfileSubmit = ({ name, avatar }) => {
+    editProfile({ name, avatar }).then((res) => {
+      console.log(res);
+      setCurrentUser(res);
       closeActiveModal();
-      navigate("/");
     });
   };
 
@@ -145,7 +155,7 @@ function App() {
     const token = localStorage.getItem("jwt");
     if (token) {
       getUserProfile().then((res) => {
-        setCurrentUser(res);
+        setCurrentUser(res.data);
         setIsLoggedIn(true);
       });
     }
@@ -186,6 +196,7 @@ function App() {
                       handleAddClick={handleAddClick}
                       clothingItems={clothingItems}
                       onSignOut={onSignOut}
+                      handleEditProfileClick={handleEditProfileClick}
                     />
                   </ProtectedRoute>
                 }
@@ -220,6 +231,12 @@ function App() {
           isOpen={activeModal === "login"}
           onClose={closeActiveModal}
           onLogin={onLogin}
+        />
+
+        <EditProfileModal
+          isOpen={activeModal === "edit"}
+          onClose={closeActiveModal}
+          onProfileSubmit={onProfileSubmit}
         />
       </div>
     </CurrentUserContext.Provider>
