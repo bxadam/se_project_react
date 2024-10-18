@@ -11,30 +11,20 @@ function ItemCard({ item, handleCardClick, handleCardLike, isLoggedIn }) {
       setIsLiked(!isLiked);
     });
   };
-  if (isLoggedIn) {
-    return (
-      <li className="card">
-        <h2 className="card__title">{item.name}</h2>
+
+  return (
+    <li className="card">
+      <h2 className="card__title">{item.name}</h2>
+      {isLoggedIn && (
         <button
           onClick={handleLike}
           className={`card__like-btn ${isLiked && "card__like-btn_liked"} ${
             beenLiked && "card__like-btn_liked"
           }`}
         ></button>
-        <img
-          onClick={handleCardClick}
-          className="card__image"
-          src={item.imageUrl}
-          alt={item.name}
-        />
-      </li>
-    );
-  }
-  return (
-    <li className="card">
-      <h2 className="card__title">{item.name}</h2>
+      )}
       <img
-        onClick={handleCardClick}
+        onClick={handleCardClick(item)}
         className="card__image"
         src={item.imageUrl}
         alt={item.name}

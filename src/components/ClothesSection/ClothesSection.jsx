@@ -31,7 +31,7 @@ function ClothesSection({
                   <ItemCard
                     key={item._id}
                     item={item}
-                    onCardClick={handleCardClick}
+                    handleCardClick={handleCardClick}
                     isLiked={isLiked}
                     handleCardLike={handleCardLike}
                     isLoggedIn={isLoggedIn}
