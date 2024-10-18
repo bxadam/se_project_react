@@ -4,8 +4,16 @@ import "./Main.css";
 import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
 import React from "react";
 
-function Main({ weatherData, handleCardClick, clothingItems }) {
+function Main({
+  weatherData,
+  handleCardClick,
+  handleCardLike,
+  clothingItems,
+  isLiked,
+}) {
   const { currentTempUnit } = React.useContext(CurrentTempUnitContext);
+
+  console.log(clothingItems);
 
   return (
     <main>
@@ -26,6 +34,8 @@ function Main({ weatherData, handleCardClick, clothingItems }) {
                   key={item._id}
                   item={item}
                   onCardClick={handleCardClick}
+                  onCardLike={handleCardLike}
+                  isLiked={isLiked}
                 />
               );
             })}

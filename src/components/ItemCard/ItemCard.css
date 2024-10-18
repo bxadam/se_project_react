@@ -28,3 +28,17 @@
   max-width: 500px;
   width: 100%;
 }
+
+.card__like-btn {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  margin: 0;
+  top: 24px;
+  right: 100px;
+  border: none;
+  padding: none;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-image: url(../../assets/heartdefault.png);
+}

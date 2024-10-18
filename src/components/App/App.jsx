@@ -13,7 +13,12 @@ import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import Footer from "../Footer/Footer";
 import { coordinates, APIkey } from "../../utils/constants";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import { getItems, createItems, deleteItems } from "../../utils/api";
+import {
+  getItems,
+  createItems,
+  deleteItems,
+  addCardLike,
+} from "../../utils/api";
 
 import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -33,6 +38,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [clothingItems, setClothingItems] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
 
   const handleAddClick = () => {
@@ -59,6 +65,27 @@ function App() {
   const handleCardClick = (card) => {
     setActiveModal("preview");
     setSelectedCard(card);
+  };
+
+  const handleCardLike = (_id, isLiked) => {
+    const token = localStorage.getItem("jwt");
+    !isLiked
+      ? addCardLike(_id, token).then((updatedCard) => {
+          setClothingItems((cards) => {
+            cards.map((item) => {
+              item._id === _id ? updatedCard : item;
+            });
+          });
+          setIsLiked(true);
+        })
+      : removeCardLike(_id, token).then((updatedCard) => {
+          setClothingItems((cards) => {
+            cards.map((item) => {
+              item._id === _id ? updatedCard : item;
+            });
+          });
+          setIsLiked(false);
+        });
   };
 
   const handleCardDelete = () => {
@@ -183,7 +210,9 @@ function App() {
                   <Main
                     weatherData={weatherData}
                     handleCardClick={handleCardClick}
+                    handleCardLike={handleCardLike}
                     clothingItems={clothingItems}
+                    isLiked={isLiked}
                   />
                 }
               ></Route>
@@ -197,6 +226,8 @@ function App() {
                       clothingItems={clothingItems}
                       onSignOut={onSignOut}
                       handleEditProfileClick={handleEditProfileClick}
+                      isLiked={isLiked}
+                      handleCardLike={handleCardLike}
                     />
                   </ProtectedRoute>
                 }

@@ -1,13 +1,26 @@
 import "./ItemCard.css";
+import heart from "../../assets/heartdefault.png";
+import heartActive from "../../assets/heartliked.png";
+import { useState } from "react";
 
-function ItemCard({ item, onCardClick }) {
-  const handleCardClick = () => {
-    onCardClick(item);
+function ItemCard({ item, handleCardClick, handleCardLike }) {
+  const [isLiked, setIsLiked] = useState(false);
+  const handleLike = () => {
+    debugger;
+    console.log(item._id);
+    handleCardLike(item._id, isLiked).then((res) => {
+      console.log(res);
+      setIsLiked(!isLiked);
+    });
   };
 
   return (
     <li className="card">
       <h2 className="card__title">{item.name}</h2>
+      <button
+        onClick={handleLike}
+        className={`card__like-btn ${isLiked && "card__like-btn_liked"}`}
+      ></button>
       <img
         onClick={handleCardClick}
         className="card__image"
