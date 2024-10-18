@@ -29,7 +29,7 @@ function deleteItems(id) {
 
 function addCardLike(id, token) {
   return fetch(`${baseUrl}/items/${id}/likes`, {
-    method: "PATCH",
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
@@ -39,7 +39,7 @@ function addCardLike(id, token) {
 
 function removeCardLike(id, token) {
   return fetch(`${baseUrl}/items/${id}/likes`, {
-    method: "REMOVE",
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,

@@ -13,8 +13,6 @@ function Main({
 }) {
   const { currentTempUnit } = React.useContext(CurrentTempUnitContext);
 
-  console.log(clothingItems);
-
   return (
     <main>
       <WeatherCard weatherData={weatherData} />

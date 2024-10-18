@@ -6,10 +6,7 @@ import { useState } from "react";
 function ItemCard({ item, handleCardClick, handleCardLike }) {
   const [isLiked, setIsLiked] = useState(false);
   const handleLike = () => {
-    debugger;
-    console.log(item._id);
     handleCardLike(item._id, isLiked).then((res) => {
-      console.log(res);
       setIsLiked(!isLiked);
     });
   };

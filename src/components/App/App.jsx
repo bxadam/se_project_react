@@ -18,6 +18,7 @@ import {
   createItems,
   deleteItems,
   addCardLike,
+  removeCardLike,
 } from "../../utils/api";
 
 import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
@@ -69,21 +70,17 @@ function App() {
 
   const handleCardLike = (_id, isLiked) => {
     const token = localStorage.getItem("jwt");
-    !isLiked
+    return !isLiked
       ? addCardLike(_id, token).then((updatedCard) => {
-          setClothingItems((cards) => {
-            cards.map((item) => {
-              item._id === _id ? updatedCard : item;
-            });
-          });
+          setClothingItems((cards) =>
+            cards.map((item) => (item._id === _id ? updatedCard : item))
+          );
           setIsLiked(true);
         })
       : removeCardLike(_id, token).then((updatedCard) => {
-          setClothingItems((cards) => {
-            cards.map((item) => {
-              item._id === _id ? updatedCard : item;
-            });
-          });
+          setClothingItems((cards) =>
+            cards.map((item) => (item._id === _id ? updatedCard : item))
+          );
           setIsLiked(false);
         });
   };
