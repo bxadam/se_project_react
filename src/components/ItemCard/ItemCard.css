@@ -42,3 +42,7 @@
   background-color: transparent;
   background-image: url(../../assets/heartdefault.png);
 }
+
+.card__like-btn_liked {
+  background-image: url(../../assets/heartliked.png);
+}
