@@ -10,6 +10,7 @@ function Main({
   handleCardLike,
   clothingItems,
   isLiked,
+  isLoggedIn,
 }) {
   const { currentTempUnit } = React.useContext(CurrentTempUnitContext);
 
@@ -34,6 +35,7 @@ function Main({
                   onCardClick={handleCardClick}
                   onCardLike={handleCardLike}
                   isLiked={isLiked}
+                  isLoggedIn={isLoggedIn}
                 />
               );
             })}

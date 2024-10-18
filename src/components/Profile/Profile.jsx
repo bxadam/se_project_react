@@ -10,6 +10,7 @@ export default function Profile({
   handleEditProfileClick,
   isLiked,
   handleCardLike,
+  isLoggedIn,
 }) {
   return (
     <div className="profile">
@@ -27,6 +28,7 @@ export default function Profile({
           clothingItems={clothingItems}
           isLiked={isLiked}
           handleCardLike={handleCardLike}
+          isLoggedIn={isLoggedIn}
         />
       </section>
     </div>

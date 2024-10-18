@@ -210,6 +210,7 @@ function App() {
                     handleCardLike={handleCardLike}
                     clothingItems={clothingItems}
                     isLiked={isLiked}
+                    isLoggedIn={isLoggedIn}
                   />
                 }
               ></Route>
@@ -225,6 +226,7 @@ function App() {
                       handleEditProfileClick={handleEditProfileClick}
                       isLiked={isLiked}
                       handleCardLike={handleCardLike}
+                      isLoggedIn={isLoggedIn}
                     />
                   </ProtectedRoute>
                 }

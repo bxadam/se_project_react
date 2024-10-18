@@ -11,6 +11,7 @@
 
 .cards__list {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   padding: 0;
   margin: 0;

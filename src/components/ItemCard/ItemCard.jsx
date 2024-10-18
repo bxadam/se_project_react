@@ -1,23 +1,38 @@
 import "./ItemCard.css";
-import heart from "../../assets/heartdefault.png";
-import heartActive from "../../assets/heartliked.png";
-import { useState } from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useState, useContext } from "react";
 
-function ItemCard({ item, handleCardClick, handleCardLike }) {
+function ItemCard({ item, handleCardClick, handleCardLike, isLoggedIn }) {
   const [isLiked, setIsLiked] = useState(false);
+  const currentUser = useContext(CurrentUserContext);
+  const beenLiked = item.likes.some((id) => id === currentUser._id);
   const handleLike = () => {
-    handleCardLike(item._id, isLiked).then((res) => {
+    handleCardLike(item._id, isLiked).then(() => {
       setIsLiked(!isLiked);
     });
   };
-
+  if (isLoggedIn) {
+    return (
+      <li className="card">
+        <h2 className="card__title">{item.name}</h2>
+        <button
+          onClick={handleLike}
+          className={`card__like-btn ${isLiked && "card__like-btn_liked"} ${
+            beenLiked && "card__like-btn_liked"
+          }`}
+        ></button>
+        <img
+          onClick={handleCardClick}
+          className="card__image"
+          src={item.imageUrl}
+          alt={item.name}
+        />
+      </li>
+    );
+  }
   return (
     <li className="card">
       <h2 className="card__title">{item.name}</h2>
-      <button
-        onClick={handleLike}
-        className={`card__like-btn ${isLiked && "card__like-btn_liked"}`}
-      ></button>
       <img
         onClick={handleCardClick}
         className="card__image"
