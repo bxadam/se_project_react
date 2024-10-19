@@ -24,7 +24,7 @@ function ItemCard({ item, handleCardClick, handleCardLike, isLoggedIn }) {
         ></button>
       )}
       <img
-        onClick={handleCardClick(item)}
+        onClick={() => handleCardClick(item)}
         className="card__image"
         src={item.imageUrl}
         alt={item.name}
