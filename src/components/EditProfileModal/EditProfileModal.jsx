@@ -34,12 +34,12 @@ export default function EditProfileModal({ isOpen, onClose, onProfileSubmit }) {
         Name{" "}
         <input
           required
-          value={name}
+          value={currentUser.name}
           autoComplete="off"
           type="text"
           className="modal__input"
           id="name"
-          placeholder={currentUser.name}
+          placeholder={name}
           onChange={handleNameChange}
         />
       </label>
@@ -47,12 +47,12 @@ export default function EditProfileModal({ isOpen, onClose, onProfileSubmit }) {
         Avatar{" "}
         <input
           required
-          value={avatar}
+          value={currentUser.avatar}
           autoComplete="off"
           type="url"
           className="modal__input"
           id="avatar"
-          placeholder={currentUser.avatar}
+          placeholder={avatar}
           onChange={handleAvatarChange}
         />
       </label>
