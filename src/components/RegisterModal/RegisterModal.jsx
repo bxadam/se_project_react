@@ -3,7 +3,12 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "../ModalWithForm/ModalWithForm.css";
 import "./RegisterModal.css";
 
-export default function RegisterModal({ onClose, isOpen, onRegister }) {
+export default function RegisterModal({
+  onClose,
+  isOpen,
+  onRegister,
+  handleLoginRoute,
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -30,10 +35,6 @@ export default function RegisterModal({ onClose, isOpen, onRegister }) {
     console.log("modal submitted");
     onRegister({ email, password, name, avatar });
   }
-
-  //make a submit handler
-
-  //pass props through context
 
   return (
     <ModalWithForm
@@ -94,7 +95,9 @@ export default function RegisterModal({ onClose, isOpen, onRegister }) {
           onChange={handleAvatarChange}
         />
       </label>
-      <button className="modal__login-btn">Or Log In</button>
+      <button onClick={handleLoginRoute} className="modal__login-btn">
+        Or Log In
+      </button>
     </ModalWithForm>
   );
 }

@@ -54,6 +54,14 @@ function App() {
     setActiveModal("login");
   };
 
+  const handleSignUpRoute = () => {
+    setActiveModal("signup");
+  };
+
+  const handleLoginRoute = (e) => {
+    setActiveModal("login");
+  };
+
   const handleEditProfileClick = () => {
     setActiveModal("edit");
   };
@@ -261,12 +269,14 @@ function App() {
           isOpen={activeModal === "login"}
           onClose={closeActiveModal}
           onLogin={onLogin}
+          handleSignUpRoute={handleSignUpRoute}
         />
 
         <EditProfileModal
           isOpen={activeModal === "edit"}
           onClose={closeActiveModal}
           onProfileSubmit={onProfileSubmit}
+          handleLoginRoute={handleLoginRoute}
         />
       </div>
     </CurrentUserContext.Provider>

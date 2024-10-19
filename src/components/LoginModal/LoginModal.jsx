@@ -3,7 +3,12 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "../ModalWithForm/ModalWithForm.css";
 import "./LoginModal.css";
 
-export default function LoginModal({ onClose, isOpen, onLogin }) {
+export default function LoginModal({
+  onClose,
+  isOpen,
+  onLogin,
+  handleSignUpRoute,
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -62,7 +67,9 @@ export default function LoginModal({ onClose, isOpen, onLogin }) {
           onChange={handlePasswordChange}
         />
       </label>
-      <button className="modal__login-btn">Or Sign Up</button>
+      <button onClick={handleSignUpRoute} className="modal__login-btn">
+        Or Sign Up
+      </button>
     </ModalWithForm>
   );
 }
