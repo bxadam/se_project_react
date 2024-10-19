@@ -95,7 +95,11 @@ export default function RegisterModal({
           onChange={handleAvatarChange}
         />
       </label>
-      <button onClick={handleLoginRoute} className="modal__login-btn">
+      <button
+        type="button"
+        onClick={handleLoginRoute}
+        className="modal__login-btn"
+      >
         Or Log In
       </button>
     </ModalWithForm>

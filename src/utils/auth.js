@@ -1,6 +1,5 @@
 import { baseUrl } from "./api";
 import { checkResponse } from "./weatherApi";
-import { TOKEN } from "./constants";
 
 function signUp({ name, email, password, avatar }) {
   return fetch(`${baseUrl}/signup`, {
@@ -15,12 +14,12 @@ function signUp({ name, email, password, avatar }) {
 }
 
 function signIn({ email, password }) {
-  console.log({ email, password });
+  const token = localStorage.getItem("jwt");
   return fetch(`${baseUrl}/signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${TOKEN}`,
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ email, password }),
   })
@@ -29,21 +28,23 @@ function signIn({ email, password }) {
 }
 
 function getUserProfile() {
+  const token = localStorage.getItem("jwt");
   return fetch(`${baseUrl}/users/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${TOKEN}`,
+      authorization: `Bearer ${token}`,
     },
   }).then(checkResponse);
 }
 
 function editProfile({ name, avatar }) {
+  const token = localStorage.getItem("jwt");
   return fetch(`${baseUrl}/users/me`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${TOKEN}`,
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ name, avatar }),
   }).then(checkResponse);

@@ -58,7 +58,7 @@ function App() {
     setActiveModal("signup");
   };
 
-  const handleLoginRoute = (e) => {
+  const handleLoginRoute = () => {
     setActiveModal("login");
   };
 
@@ -153,7 +153,6 @@ function App() {
 
   const onProfileSubmit = ({ name, avatar }) => {
     editProfile({ name, avatar }).then((res) => {
-      console.log(res);
       setCurrentUser(res);
       closeActiveModal();
     });
@@ -263,6 +262,7 @@ function App() {
           isOpen={activeModal === "signup"}
           onClose={closeActiveModal}
           onRegister={onRegister}
+          handleLoginRoute={handleLoginRoute}
         />
 
         <LoginModal
@@ -276,7 +276,6 @@ function App() {
           isOpen={activeModal === "edit"}
           onClose={closeActiveModal}
           onProfileSubmit={onProfileSubmit}
-          handleLoginRoute={handleLoginRoute}
         />
       </div>
     </CurrentUserContext.Provider>

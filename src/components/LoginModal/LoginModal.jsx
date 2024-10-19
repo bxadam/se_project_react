@@ -67,7 +67,11 @@ export default function LoginModal({
           onChange={handlePasswordChange}
         />
       </label>
-      <button onClick={handleSignUpRoute} className="modal__login-btn">
+      <button
+        type="button"
+        onClick={handleSignUpRoute}
+        className="modal__login-btn"
+      >
         Or Sign Up
       </button>
     </ModalWithForm>
