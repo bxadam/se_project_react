@@ -7,7 +7,7 @@ import React from "react";
 function Main({
   weatherData,
   handleCardClick,
-  handleCardLike,
+  onToggleLike,
   clothingItems,
   isLiked,
   isLoggedIn,
@@ -33,7 +33,7 @@ function Main({
                   key={item._id}
                   item={item}
                   handleCardClick={handleCardClick}
-                  handleCardLike={handleCardLike}
+                  onToggleLike={onToggleLike}
                   isLiked={isLiked}
                   isLoggedIn={isLoggedIn}
                 />

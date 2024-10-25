@@ -6,6 +6,7 @@ import "./RegisterModal.css";
 export default function RegisterModal({
   onClose,
   isOpen,
+  isLoading,
   onRegister,
   handleLoginRoute,
 }) {
@@ -38,7 +39,7 @@ export default function RegisterModal({
 
   return (
     <ModalWithForm
-      buttonText="Sign Up"
+      buttonText={isLoading ? "Registering..." : "Sign Up"}
       title="Register"
       isOpen={isOpen}
       onClose={onClose}

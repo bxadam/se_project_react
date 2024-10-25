@@ -6,6 +6,7 @@ import "./LoginModal.css";
 export default function LoginModal({
   onClose,
   isOpen,
+  isLoading,
   onLogin,
   handleSignUpRoute,
 }) {
@@ -35,7 +36,7 @@ export default function LoginModal({
 
   return (
     <ModalWithForm
-      buttonText="Log In"
+      buttonText={isLoading ? "Logging In..." : "Log In"}
       title="Log In"
       isOpen={isOpen}
       onClose={onClose}

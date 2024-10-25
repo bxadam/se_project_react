@@ -9,7 +9,7 @@ export default function Profile({
   onSignOut,
   handleEditProfileClick,
   isLiked,
-  handleCardLike,
+  onToggleLike,
   isLoggedIn,
 }) {
   return (
@@ -27,7 +27,7 @@ export default function Profile({
           handleAddClick={handleAddClick}
           clothingItems={clothingItems}
           isLiked={isLiked}
-          handleCardLike={handleCardLike}
+          onToggleLike={onToggleLike}
           isLoggedIn={isLoggedIn}
         />
       </section>

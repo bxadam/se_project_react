@@ -3,7 +3,12 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "../ModalWithForm/ModalWithForm.css";
 import "./AddItemModal.css";
 
-export default function AddItemModal({ onClose, onAddItem, isOpen }) {
+export default function AddItemModal({
+  onClose,
+  onAddItem,
+  isOpen,
+  isLoading,
+}) {
   const [name, setName] = useState("");
 
   function handleNameChange(e) {
@@ -29,7 +34,7 @@ export default function AddItemModal({ onClose, onAddItem, isOpen }) {
 
   return (
     <ModalWithForm
-      buttonText="Add garment"
+      buttonText={isLoading ? "Adding garment..." : "Add garment"}
       title="New garment"
       isOpen={isOpen}
       onClose={onClose}

@@ -1,15 +1,15 @@
 import "./ItemCard.css";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { useState, useContext } from "react";
 
-function ItemCard({ item, handleCardClick, handleCardLike, isLoggedIn }) {
-  const [isLiked, setIsLiked] = useState(false);
-  const currentUser = useContext(CurrentUserContext);
-  const beenLiked = item.likes.some((id) => id === currentUser._id);
+function ItemCard({
+  item,
+  handleCardClick,
+  onToggleLike,
+  isLoggedIn,
+  likedItems,
+}) {
+  const isLiked = Boolean(likedItems[item._id]);
   const handleLike = () => {
-    handleCardLike(item._id, isLiked).then(() => {
-      setIsLiked(!isLiked);
-    });
+    onToggleLike(item._id);
   };
 
   return (
@@ -18,9 +18,7 @@ function ItemCard({ item, handleCardClick, handleCardLike, isLoggedIn }) {
       {isLoggedIn && (
         <button
           onClick={handleLike}
-          className={`card__like-btn ${isLiked && "card__like-btn_liked"} ${
-            beenLiked && "card__like-btn_liked"
-          }`}
+          className={`card__like-btn ${isLiked ? "card__like-btn_liked" : ""}`}
         ></button>
       )}
       <img

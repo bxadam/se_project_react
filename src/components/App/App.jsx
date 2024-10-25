@@ -39,7 +39,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [clothingItems, setClothingItems] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  const [likedItems, setLikedItems] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleAddClick = () => {
@@ -76,20 +77,29 @@ function App() {
     setSelectedCard(card);
   };
 
-  const handleCardLike = (_id, isLiked) => {
+  console.log(likedItems);
+
+  const handleCardLike = (_id) => {
     const token = localStorage.getItem("jwt");
+    const isLiked = Boolean(likedItems[_id]);
     return !isLiked
       ? addCardLike(_id, token).then((updatedCard) => {
           setClothingItems((cards) =>
             cards.map((item) => (item._id === _id ? updatedCard : item))
           );
-          setIsLiked(true);
+          setLikedItems((prev) => ({
+            ...prev,
+            [_id]: true,
+          }));
         })
       : removeCardLike(_id, token).then((updatedCard) => {
           setClothingItems((cards) =>
             cards.map((item) => (item._id === _id ? updatedCard : item))
           );
-          setIsLiked(false);
+          setLikedItems((prev) => ({
+            ...prev,
+            [_id]: false,
+          }));
         });
   };
 
@@ -105,6 +115,7 @@ function App() {
   };
 
   const onAddItem = ({ name, imageUrl, weather }) => {
+    setIsLoading(true);
     const newClothingItem = {
       name: name,
       imageUrl: imageUrl,
@@ -112,6 +123,7 @@ function App() {
     };
     createItems(newClothingItem)
       .then((card) => {
+        setIsLoading(false);
         setClothingItems([card, ...clothingItems]);
         closeActiveModal();
       })
@@ -119,29 +131,35 @@ function App() {
   };
 
   const onRegister = ({ name, email, password, avatar }) => {
+    setIsLoading(true);
     const userProfile = { name, email, password, avatar };
-    signUp(userProfile).then((res) => {
-      console.log(res);
-      setCurrentUser(userProfile);
-      signIn({ email, password });
-      setIsLoggedIn(true);
-      closeActiveModal();
-      navigate("/profile");
-    });
+    signUp(userProfile)
+      .then(() => {
+        setCurrentUser(userProfile);
+        signIn({ email, password });
+        setIsLoggedIn(true);
+        setIsLoading(false);
+        closeActiveModal();
+        navigate("/profile");
+      })
+      .catch((error) => console.error(error));
   };
 
   const onLogin = ({ email, password }) => {
+    setIsLoading(true);
     if (!{ email, password }) {
       return;
     }
-    return signIn({ email, password }).then((res) => {
-      console.log(res);
-      localStorage.setItem("jwt", res.token);
-      setIsLoggedIn(true);
-      setCurrentUser(res.user);
-      closeActiveModal();
-      navigate("/profile");
-    });
+    return signIn({ email, password })
+      .then((res) => {
+        localStorage.setItem("jwt", res.token);
+        setIsLoggedIn(true);
+        setCurrentUser(res.user);
+        setIsLoading(false);
+        closeActiveModal();
+        navigate("/profile");
+      })
+      .catch((error) => console.error(error));
   };
 
   const onSignOut = () => {
@@ -152,10 +170,14 @@ function App() {
   };
 
   const onProfileSubmit = ({ name, avatar }) => {
-    editProfile({ name, avatar }).then((res) => {
-      setCurrentUser(res);
-      closeActiveModal();
-    });
+    setIsLoading(true);
+    editProfile({ name, avatar })
+      .then((res) => {
+        setCurrentUser(res);
+        setIsLoading(false);
+        closeActiveModal();
+      })
+      .catch((error) => console.error(error));
   };
 
   const handleToggleSwitchChange = () => {
@@ -192,6 +214,22 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (!activeModal) return;
+
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]);
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
@@ -214,9 +252,8 @@ function App() {
                   <Main
                     weatherData={weatherData}
                     handleCardClick={handleCardClick}
-                    handleCardLike={handleCardLike}
+                    onToggleLike={handleCardLike}
                     clothingItems={clothingItems}
-                    isLiked={isLiked}
                     isLoggedIn={isLoggedIn}
                   />
                 }
@@ -231,8 +268,7 @@ function App() {
                       clothingItems={clothingItems}
                       onSignOut={onSignOut}
                       handleEditProfileClick={handleEditProfileClick}
-                      isLiked={isLiked}
-                      handleCardLike={handleCardLike}
+                      onToggleLike={handleCardLike}
                       isLoggedIn={isLoggedIn}
                     />
                   </ProtectedRoute>
@@ -249,6 +285,7 @@ function App() {
             isOpen={activeModal === "add-garment"}
             onClose={closeActiveModal}
             onAddItem={onAddItem}
+            isLoading={isLoading}
           />
 
           <ItemModal
@@ -263,6 +300,7 @@ function App() {
           onClose={closeActiveModal}
           onRegister={onRegister}
           handleLoginRoute={handleLoginRoute}
+          isLoading={isLoading}
         />
 
         <LoginModal
@@ -270,12 +308,14 @@ function App() {
           onClose={closeActiveModal}
           onLogin={onLogin}
           handleSignUpRoute={handleSignUpRoute}
+          isLoading={isLoading}
         />
 
         <EditProfileModal
           isOpen={activeModal === "edit"}
           onClose={closeActiveModal}
           onProfileSubmit={onProfileSubmit}
+          isLoading={isLoading}
         />
       </div>
     </CurrentUserContext.Provider>

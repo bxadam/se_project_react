@@ -8,7 +8,7 @@ function ClothesSection({
   handleAddClick,
   clothingItems,
   isLiked,
-  handleCardLike,
+  onToggleLike,
   isLoggedIn,
 }) {
   const currentUser = useContext(CurrentUserContext);
@@ -33,7 +33,7 @@ function ClothesSection({
                     item={item}
                     handleCardClick={handleCardClick}
                     isLiked={isLiked}
-                    handleCardLike={handleCardLike}
+                    onToggleLike={onToggleLike}
                     isLoggedIn={isLoggedIn}
                   />
                 );
