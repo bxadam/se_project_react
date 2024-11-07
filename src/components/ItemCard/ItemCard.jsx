@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import "./ItemCard.css";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function ItemCard({
   item,
@@ -7,9 +9,10 @@ function ItemCard({
   isLoggedIn,
   likedItems,
 }) {
-  const isLiked = Boolean(likedItems[item._id]);
+  const currentUser = useContext(CurrentUserContext);
+  const isLiked = item.likes.some((id) => id === currentUser._id);
   const handleLike = () => {
-    onToggleLike(item._id);
+    onToggleLike(item._id, isLiked);
   };
 
   return (

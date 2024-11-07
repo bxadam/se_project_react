@@ -39,7 +39,6 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [clothingItems, setClothingItems] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [likedItems, setLikedItems] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -77,29 +76,18 @@ function App() {
     setSelectedCard(card);
   };
 
-  console.log(likedItems);
-
-  const handleCardLike = (_id) => {
+  const handleCardLike = (_id, isLiked) => {
     const token = localStorage.getItem("jwt");
-    const isLiked = Boolean(likedItems[_id]);
     return !isLiked
       ? addCardLike(_id, token).then((updatedCard) => {
           setClothingItems((cards) =>
             cards.map((item) => (item._id === _id ? updatedCard : item))
           );
-          setLikedItems((prev) => ({
-            ...prev,
-            [_id]: true,
-          }));
         })
       : removeCardLike(_id, token).then((updatedCard) => {
           setClothingItems((cards) =>
             cards.map((item) => (item._id === _id ? updatedCard : item))
           );
-          setLikedItems((prev) => ({
-            ...prev,
-            [_id]: false,
-          }));
         });
   };
 

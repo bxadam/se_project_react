@@ -51,7 +51,7 @@ export default function EditProfileModal({
           type="text"
           className="modal__input"
           id="name"
-          placeholder={name}
+          placeholder={currentUser.name}
           onChange={handleNameChange}
         />
       </label>
@@ -64,7 +64,7 @@ export default function EditProfileModal({
           type="url"
           className="modal__input"
           id="avatar"
-          placeholder={avatar}
+          placeholder={currentUser.avatar}
           onChange={handleAvatarChange}
         />
       </label>
