@@ -8,9 +8,7 @@ function signUp({ name, email, password, avatar }) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ name, email, password, avatar }),
-  })
-    .then(checkResponse)
-    .catch((error) => console.error(error));
+  }).then(checkResponse);
 }
 
 function signIn({ email, password }) {
@@ -22,9 +20,7 @@ function signIn({ email, password }) {
       authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ email, password }),
-  })
-    .then(checkResponse)
-    .catch((error) => console.error(error));
+  }).then(checkResponse);
 }
 
 function getUserProfile() {

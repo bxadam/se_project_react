@@ -42,7 +42,7 @@ export default function EditProfileModal({
       onClose={onClose}
       onSubmit={handleProfileSubmit}
     >
-      <label htmlFor="name" className="modal__label">
+      <label className="modal__label">
         Name{" "}
         <input
           required
@@ -55,7 +55,7 @@ export default function EditProfileModal({
           onChange={handleNameChange}
         />
       </label>
-      <label htmlFor="avatar" className="modal__label">
+      <label className="modal__label">
         Avatar{" "}
         <input
           required

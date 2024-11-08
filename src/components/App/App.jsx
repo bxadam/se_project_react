@@ -195,10 +195,12 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
-      getUserProfile().then((res) => {
-        setCurrentUser(res.data);
-        setIsLoggedIn(true);
-      });
+      getUserProfile()
+        .then((res) => {
+          setCurrentUser(res.data);
+          setIsLoggedIn(true);
+        })
+        .catch(console.error);
     }
   }, []);
 

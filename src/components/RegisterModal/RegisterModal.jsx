@@ -45,7 +45,7 @@ export default function RegisterModal({
       onClose={onClose}
       onSubmit={handleRegister}
     >
-      <label htmlFor="email" className="modal__label">
+      <label className="modal__label">
         Email{" "}
         <input
           required
@@ -58,7 +58,7 @@ export default function RegisterModal({
           onChange={handleEmailChange}
         />
       </label>
-      <label htmlFor="password" className="modal__label">
+      <label className="modal__label">
         Password{" "}
         <input
           required
@@ -71,7 +71,7 @@ export default function RegisterModal({
           onChange={handlePasswordChange}
         />
       </label>
-      <label htmlFor="name" className="modal__label">
+      <label className="modal__label">
         Name{" "}
         <input
           required
@@ -84,7 +84,7 @@ export default function RegisterModal({
           onChange={handleNameChange}
         />
       </label>
-      <label htmlFor="avatar" className="modal__label">
+      <label className="modal__label">
         Avatar Url{" "}
         <input
           required
