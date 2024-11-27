@@ -3,12 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://bxadam.github.io/se_project_react/",
+  "homepage": "https://wtwrdemo.crabdance.com",
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "npm run predeploy && scp -r ./dist/* bx.adam03@wtwrdemo.crabdance.com:/home/bx.adam03/frontend",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
